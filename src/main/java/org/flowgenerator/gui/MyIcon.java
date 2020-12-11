@@ -13,8 +13,13 @@ public class MyIcon extends ImageIcon {
 	}
 	public MyIcon(String nameIcone) {
 		try {
-		   byte data[] = JarUtil.extract(FlowGenerator.getArqJar(),FlowGenerator.getIcones()+nameIcone);
-		   this.icone = new ImageIcon(data);
+		   if (FlowGenerator.getArqJar()==null) {
+			   String fileIcon = "./src/main/resources/icones/"+nameIcone;
+			   this.icone = new ImageIcon(fileIcon);
+		   } else {
+			   byte data[] = JarUtil.extract(FlowGenerator.getArqJar(),nameIcone);
+		       this.icone = new ImageIcon(data);
+		   }
         } catch (IOException e) {
 			JOptionPane.showMessageDialog(null,
 					FlowGenerator.mlp.getString("error_icon")+" "+nameIcone+" - "+e,

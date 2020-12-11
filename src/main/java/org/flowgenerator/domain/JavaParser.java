@@ -219,7 +219,8 @@ public class JavaParser implements JavaParserConstants {
  * syntax errors for simple modifier mistakes. It will also enable us to give
  * better error messages.
  */
-  final public int Modifiers() throws ParseException {
+  @SuppressWarnings("unused")
+final public int Modifiers() throws ParseException {
    int modifiers = 0;
     label_3:
     while (true) {

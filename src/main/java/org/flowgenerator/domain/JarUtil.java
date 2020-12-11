@@ -11,10 +11,12 @@ public final class JarUtil {
 		// obtem a entrada desejada
 		JarEntry je = jar.getJarEntry(recurso);
 		if (je == null) {
+			jar.close();
 			throw new IOException("Entrada nao localizada: "+recurso);
 		}
 		int tam = (int)je.getSize(); // obtem o tamanho da entrada
 		if (tam == -1) { // se tamanho indeterminado lanca excecao
+			jar.close();
 			throw new IOException("Tamanho indeterminado: "+recurso);
 		}
 		// abre stream de entrada para ler recurso

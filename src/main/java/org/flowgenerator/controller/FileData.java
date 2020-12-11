@@ -26,6 +26,7 @@ public class FileData implements Comparable<Object> {
 	public FileData(String fileName, String filePath) {
 		this.fileName     = fileName;
 		this.filePath     = filePath.replace("\\", "/");
+		this.fileFullPath = this.filePath;
 	}
 	
 	public FileData( String fileName, String filePath, String fileType ) {
@@ -39,7 +40,6 @@ public class FileData implements Comparable<Object> {
         this.fileLength = NumberFormat.getInstance().format( file.length() / 1024 );
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:MM:SS");
         this.fileLastDate = sdf.format( new Date(file.lastModified()));
-		this.fileFullPath = this.filePath;
 	}
 	
 	public String getFileName() {
@@ -86,6 +86,7 @@ public class FileData implements Comparable<Object> {
 	
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+		this.fileFullPath = filePath;
 	}
 	
 	public String getFileFullPath() {

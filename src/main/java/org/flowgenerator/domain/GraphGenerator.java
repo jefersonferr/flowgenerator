@@ -1,6 +1,13 @@
 package org.flowgenerator.domain;
-import java.io.*;
-import java.util.*;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.ListIterator;
+import java.util.Stack;
 
 import org.flowgenerator.gui.FlowGenerator;
 
@@ -164,11 +171,13 @@ public class GraphGenerator {
      * @link www.graphviz.org
      */
     private StringBuffer geraClusterClass(ClusterClass classe, String iden) {    
-           LinkedList<Object> listClasses, listArcs;
-		LinkedList<GraphNode> listNodes;
+           LinkedList<ClusterClass> listClasses;
+           LinkedList<Integer> listArcs;
+           LinkedList<GraphNode> listNodes;
 		   LinkedList<ClusterMethod> listMetodos;
-    	   ListIterator<Object> liClasses, liArcs;
-		ListIterator<GraphNode> liNodes;
+    	   ListIterator<ClusterClass> liClasses;
+    	   ListIterator<Integer> liArcs;
+    	   ListIterator<GraphNode> liNodes;
 		   ListIterator<ClusterMethod> liMetodos;
            ClusterClass innerClass;
            ClusterMethod metodo;
@@ -244,7 +253,7 @@ public class GraphGenerator {
 				 } catch (IOException erro) {
 				 }				    	
            }
-           listClasses = (LinkedList)classe.getClasses();
+           listClasses = (LinkedList<ClusterClass>)classe.getClasses();
            liClasses = listClasses.listIterator();
            while (liClasses.hasNext()) {
                   innerClass = (ClusterClass)liClasses.next();
@@ -294,8 +303,8 @@ public class GraphGenerator {
     private StringBuffer geraClusterClassHtml(ClusterClass classe, String iden) {   
     	   File         arq    = new File(getSourceFile());
     	   String       nome_arq = arq.getName();
-           LinkedList listClasses, listMetodos, listNodes;
-    	   ListIterator liClasses, liMetodos, liNodes;
+           LinkedList<?> listClasses, listMetodos, listNodes;
+    	   ListIterator<?> liClasses, liMetodos, liNodes;
            ClusterClass innerClass;
            ClusterMethod metodo;
            ControlFlowGraph graphNodes;
@@ -310,7 +319,7 @@ public class GraphGenerator {
       	   sb.append(iden+"      </TABLE>\n");
 
            // gera os clusters dos metodos
-           listMetodos = (LinkedList)classe.getMetodos();
+           listMetodos = (LinkedList<?>)classe.getMetodos();
            liMetodos = listMetodos.listIterator();
           while (liMetodos.hasNext()) {
                   metodo = (ClusterMethod)liMetodos.next();
@@ -323,7 +332,7 @@ public class GraphGenerator {
               	  sb.append(iden+"      </TABLE>\n");
               	  sb.append(iden+"</TD>\n");
                   graphNodes = metodo.getGfc();
-      	          listNodes = (LinkedList)graphNodes.getNodes();
+      	          listNodes = (LinkedList<?>)graphNodes.getNodes();
     	          liNodes = listNodes.listIterator();
               	  sb.append(iden+"<TD>\n");
                   sb.append(iden+"      <TABLE BORDER="+aspas+"1"+aspas+"  CELLPADDING="+aspas+"3"+aspas+">\n");
@@ -347,7 +356,7 @@ public class GraphGenerator {
               	  sb.append("</TD>\n");
               	  sb.append("</TABLE>\n");
            }
-           listClasses = (LinkedList)classe.getClasses();
+           listClasses = (LinkedList<?>)classe.getClasses();
            liClasses = listClasses.listIterator();
            while (liClasses.hasNext()) {
                   innerClass = (ClusterClass)liClasses.next();

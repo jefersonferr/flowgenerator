@@ -44,6 +44,7 @@ public class MyEditor extends JTextPane {
 
 	@SuppressWarnings("serial")
 	public MyEditor() {
+		this.file = new FileData( "NoName.java", "." );
 		this.setEditorKit(new StyledEditorKit());
 		this.setEditable(true);
 		doc = new MyDocument();

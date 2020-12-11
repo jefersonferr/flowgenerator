@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.flowgenerator</groupId>
 	<artifactId>flowgenerator</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>flowgenerator</name>
 	<description>Visualization tool to support the structural testing for
 		Java classes by mapping the source code into a well-known graphic
@@ -34,7 +34,37 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>org.flowgenerator.gui.FlowGenerator</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
 		</plugins>
+		
+		<resources>
+      		<resource>
+        		<directory>src/main/resources</directory>
+               		<includes>
+          				<include>**/*.properties</include>
+          				<include>**/*.ico</include>
+        			</includes>
+      		</resource>
+      		<resource>
+        		<directory>src/main/resources/icones</directory>
+               		<includes>
+          				<include>**/*.png</include>
+          				<include>**/*.gif</include>
+          				<include>**/*.jpeg</include>
+        			</includes>
+      		</resource>
+    	</resources>
+		
 	</build>
 
 </project>

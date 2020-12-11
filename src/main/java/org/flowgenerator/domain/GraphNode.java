@@ -6,7 +6,9 @@
  Objetivo.: Estrutura de dados que armazena as informacoes dos nos do grafo de fluxo de controle
  */
 package org.flowgenerator.domain;
-import java.util.*;
+
+import java.util.LinkedList;
+
 public class GraphNode {
 	static private int nextLabel;
 	private Integer numNode;
@@ -25,11 +27,11 @@ public class GraphNode {
 		setNextLabel(0);
 	}
 	public GraphNode(int number, int previous, int level, int command) {
-		numNode = new Integer(number);
-		setLabelNode(new Integer(this.getNextLabel()));
-		prevNode = new Integer(previous);
-		levelNode = new Integer(level);
-		commandNode = new Integer(command);
+		numNode = Integer.valueOf(number);
+		setLabelNode(Integer.valueOf(this.getNextLabel()));
+		prevNode = Integer.valueOf(previous);
+		levelNode = Integer.valueOf(level);
+		commandNode = Integer.valueOf(command);
 		this.active();
 		this.setStatusAnt('A');
 		arcsNode = new LinkedList<Integer>();
@@ -48,7 +50,7 @@ public class GraphNode {
 		return commandNode.intValue();
 	}
 	public void setCommand(int c) {
-		commandNode = new Integer(c);
+		commandNode = Integer.valueOf(c);
 	}
 	public char getStatus() {
 		return statusNode;
@@ -76,12 +78,12 @@ public class GraphNode {
 		statusNode = 'E';
 	}
 	public void insertArc(int target) {
-		arcsNode.add(new Integer(target));
+		arcsNode.add(Integer.valueOf(target));
 	}
 	public boolean removeArc(int target) {
-		return arcsNode.remove(new Integer(target));
+		return arcsNode.remove(Integer.valueOf(target));
 	}
-	public LinkedList getArcs() {
+	public LinkedList<Integer> getArcs() {
 		return arcsNode;
 	}
 	public int numArcs() {

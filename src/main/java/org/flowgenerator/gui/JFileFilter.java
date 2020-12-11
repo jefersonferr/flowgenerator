@@ -25,7 +25,7 @@ public class JFileFilter extends javax.swing.filechooser.FileFilter {
 			return true;
 			
 		} else if (f.isFile()) {
-			Iterator it = exts.iterator();
+			Iterator<String> it = exts.iterator();
 			while (it.hasNext()) {
 				if (f.getName().endsWith((String) it.next()))
 					return true;

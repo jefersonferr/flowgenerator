@@ -10,7 +10,7 @@ import java.util.Stack;
 public class ClusterMethod extends ClusterGraph implements JavaParserConstants {
 
     // atributos
-    private int node, node_ant, level, level_ant, cc;
+    private int node, node_ant, level, cc;
     // grafo de fluxo de controle do metodo
     private ControlFlowGraph graphNodes;
     // no auxiliar utilizado para a construcao do GFC
@@ -29,7 +29,6 @@ public class ClusterMethod extends ClusterGraph implements JavaParserConstants {
 		node = 0; 
 		node_ant = node;
 		level = 0;
-		level_ant = level;
 		graphNodes = new ControlFlowGraph();
 		stackNodes = new Stack<GraphNode>();
 		aux_stack  = new Stack<GraphNode>();
@@ -46,7 +45,6 @@ public class ClusterMethod extends ClusterGraph implements JavaParserConstants {
 		node = 0;
 		node_ant = node;
 		level = 0;
-		level_ant = level;
 		graphNodes = new ControlFlowGraph();
 		stackNodes = new Stack<GraphNode>();
 		aux_stack  = new Stack<GraphNode>();
@@ -64,8 +62,7 @@ public class ClusterMethod extends ClusterGraph implements JavaParserConstants {
 		if (c==BEGIN||c==IF||c==WHILE||c==DO||c==SWITCH||c==FOR) {
 			node_ant = node;
 			node++;
-			level_ant = level;
-		    level++;
+			level++;
 			graphNodes.insertNode( node, node_ant, level, c);
 			if (node_ant != 0) {
 				graphNodes.joinGraphNodes(node_ant, node);
@@ -97,8 +94,7 @@ public class ClusterMethod extends ClusterGraph implements JavaParserConstants {
 				c = THEN;
 				node_ant = node;
 				node++;
-				level_ant = level;
-			    level++;
+				level++;
 				graphNodes.insertNode( node, node_ant, level, c);
 				graphNodes.joinGraphNodes(node_ant, node);
 				stackNodes.push(graphNodes.getNode(node));	
@@ -201,7 +197,6 @@ public class ClusterMethod extends ClusterGraph implements JavaParserConstants {
 			node_ant = (node_aux.getNumber()).intValue();
 			node++;
 			level--;
-			level_ant--;
 			graphNodes.insertNode( node, node_ant, level, c);
 			graphNodes.joinGraphNodes(node_ant, node);
 			node_aux = (GraphNode)stackNodes.pop();
@@ -225,7 +220,6 @@ public class ClusterMethod extends ClusterGraph implements JavaParserConstants {
 			node_ant = (node_aux.getNumber()).intValue();
 			node++;
 			level--;
-			level_ant--;
 			graphNodes.insertNode( node, node_ant, level, c);
 			graphNodes.joinGraphNodes(node_ant, node);
 			node_aux = (GraphNode)stackNodes.pop();
@@ -249,7 +243,6 @@ public class ClusterMethod extends ClusterGraph implements JavaParserConstants {
 			node_ant = node;
 			node++;
 			level--;
-			level_ant--;
 			graphNodes.insertNode( node, node_ant, level, c);
 			graphNodes.joinGraphNodes(node_ant, node);
 			node_aux = (GraphNode)stackNodes.pop();

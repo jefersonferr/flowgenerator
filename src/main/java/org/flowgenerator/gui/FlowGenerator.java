@@ -7,6 +7,7 @@
 package org.flowgenerator.gui;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.*;
@@ -24,8 +25,8 @@ import java.util.*;
 public class FlowGenerator extends JFrame {
 	
 	private static final long 	serialVersionUID = 1L;
-	private static final String arqJar = "FlowGenerator.jar";
-	private static String icones;
+	//private static final String arqJar = "FlowGenerator.jar";
+	private static String containerJar;
 	private static String language;
 	private static JLabel lbStatus;
 	private static String sFile[] = 
@@ -74,6 +75,19 @@ public class FlowGenerator extends JFrame {
 	 */
 	public FlowGenerator() {
 		super("FlowGenerator");
+		String src = null;
+		try {
+			src = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    if (src.contains("jar")) {
+		   containerJar = src;
+	    } else {
+	       containerJar = null;
+	    }
+	    
         getProperties();
         mlp = new MyLanguageProperties();
 		// colecoes responsaveis pelo armazenamento do editores e dos arquivos correspondentes
@@ -146,8 +160,8 @@ public class FlowGenerator extends JFrame {
 	public static void setStatus(int linha, int coluna){
 		String padrao = mlp.getString("linecolumn");
 		MessageFormat mf = new MessageFormat(padrao);
-		Object parameters[] = { new Integer(linha),
-				                new Integer(coluna) };
+		Object parameters[] = { Integer.valueOf(linha),
+				                Integer.valueOf(coluna) };
 		String msg = mf.format(parameters, new StringBuffer(), null).toString();
 		lbStatus.setText(msg);
 	}
@@ -209,7 +223,7 @@ public class FlowGenerator extends JFrame {
 		JScrollPane sp = new JScrollPane(taEditor);
 		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 	    pEdit.addTab(taEditor.getFileName(), new MyIcon("java.png").getIcone(), sp);
-	    if (!taEditor.getFileName().equals("")) {
+	    if (!taEditor.getFileName().equals("NoName.java")) {
 		   try {
 			   taEditor.load(taEditor.getFileFullName());
 		   } catch (IOException ioe) {
@@ -435,21 +449,20 @@ public class FlowGenerator extends JFrame {
 	private static void getProperties() {
 		Properties config = new Properties();
 		try {
-			config.load(new ByteArrayInputStream(JarUtil.extract(arqJar,"FlowGenerator.properties")));
+			if (containerJar != null) {
+			   config.load(new ByteArrayInputStream(JarUtil.extract(containerJar,"FlowGenerator.properties")));
+			} else {
+				FileReader reader=new FileReader("./src/main/resources/FlowGenerator.properties");
+				config.load(reader);
+			}
+		
 			// carrega as propriedades
-			setIcones(config.getProperty("icones","./"));
 			setLanguage(config.getProperty("language","./"));
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null,
 					mlp.getString("loading_properties")+" "+e,
 					"FlowGenerator", JOptionPane.ERROR_MESSAGE);
 		}
-	}
-	public static String getIcones() {
-		return icones;
-	}
-	private static void setIcones(String icones) {
-		FlowGenerator.icones = icones;
 	}
 	public static String getLanguage() {
 		return language;
@@ -458,6 +471,6 @@ public class FlowGenerator extends JFrame {
 		FlowGenerator.language = language;
 	}
 	public static String getArqJar() {
-		return arqJar;
+		return containerJar;
 	}
 }

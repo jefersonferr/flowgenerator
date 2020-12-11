@@ -9,8 +9,7 @@
 package org.flowgenerator.controller;
 import java.util.Hashtable;
 @SuppressWarnings("serial")
-public class KeyWords extends Hashtable {
-	@SuppressWarnings("unchecked")
+public class KeyWords extends Hashtable<Object, Object> {
 	public KeyWords() {
 		Object dummyObject = new Object();
 	    this.put( "abstract", dummyObject );
